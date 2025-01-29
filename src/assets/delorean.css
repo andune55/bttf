@@ -1,0 +1,388 @@
+/*
+http://meyerweb.com/eric/tools/css/reset/
+v2.0 | 20110126
+License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+@font-face {
+	font-family: 'Martidoc';
+	src: url('./fonts/UnisonPro-BoldRound.eot');
+	src: url('./fonts/UnisonPro-BoldRound.eot?#iefix') format('embedded-opentype'),
+		url('./fonts/UnisonPro-BoldRound.woff2') format('woff2'),
+		url('./fonts/UnisonPro-BoldRound.woff') format('woff'),
+		url('./fonts/UnisonPro-BoldRound.ttf') format('truetype'),
+		url('./fonts/UnisonPro-BoldRound.svg#UnisonPro-BoldRound') format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+    font-family: 'digital-7';
+    src: url('./fonts/Digital-7.eot');
+    src: url('./fonts/Digital-7.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Digital-7.woff2') format('woff2'),
+        url('./fonts/Digital-7.woff') format('woff'),
+        url('./fonts/Digital-7.ttf') format('truetype'),
+        url('./fonts/Digital-7.svg#Digital-7Mono') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+  background-color: #030504;
+  font-family: 'digital-7', sans-serif;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+ 
+main.clock-display.present,
+main.clock-display.destination,
+main.clock-display.departed {
+	width: fit-content;
+	background: url(./img/fondo.png) repeat;
+	text-align: center;
+	padding: 15px;
+	border-radius: 4px;
+	margin: 15px auto 0 auto;
+	background-color: #000000;	
+}
+main.clock-display.present{
+	color: #64FF20;
+	--c: linear-gradient(to right top, #f2ff5a, #daff47, #beff35, #9dff26, #71ff1b);
+	--fondomes: linear-gradient(to right, #002204 10%, #1A4520 25%, #000000 33%);
+}
+main.clock-display.destination{
+	color: #ED4916;
+	--c: linear-gradient(to right, #fabf3e, #fabf3e, #fabf3e, #fabf3e, #fabf3e, #fac443, #fbc947, #fbce4c, #fcd957, #fde463, #fdef70, #fefa7d);
+	--fondomes: linear-gradient(to right, #3D0A0B 10%, #3D0A0B 25%, #000000 33%);
+}
+main.clock-display.departed{
+	color: #F4DB38;   
+	--c: linear-gradient(to right, #ffff68, #ffff68, #ffff68, #ffff68, #ffff68, #fdfa62, #faf65c, #f8f156, #f3e648, #eedb39, #e9d128, #e4c611);
+	--fondomes: linear-gradient(to right, #41221A 10%, #624610 25%, #000000 33%);
+}
+
+.clock-display.present .placeholder {
+	color: #1a4520;
+	position: absolute;
+	top: 0;
+	z-index: 50;	
+	/*background: linear-gradient(to right, #1a4520 0%, #002204 100%);*/
+	background: linear-gradient(to right, #1a4520, #143e1c, #0f3717, #093113, #052a0e, #04270b, #022508, #002204, #002204, #002204, #002204, #002204);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.clock-display.destination .placeholder {
+	color: #3D0A0B;
+	position: absolute;
+	top: 0;
+	z-index: 50;	
+	background: linear-gradient(to right, #3D0A0B 5%, #000000 100%);	
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.clock-display.departed .placeholder {
+	color: #CC9716;
+	position: absolute;
+	top: 0;
+	z-index: 50;	
+	background: linear-gradient(to right, #41221A 5%, #000000 100%);	
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+
+.light-on {
+	color: #64FF20 !important;
+}
+
+/* DOTS ///////////////////////////////////////////////////////////////////////////////////////*/
+
+.clock-field .colon{
+	margin: 0 4px !important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}	
+
+
+@keyframes blinking {
+	0% {
+		background: var(--c);
+
+	}
+	100% {
+		background: linear-gradient(to right top, #283023, #24271d, #1f1f18, #191713, #100f0d);	
+	}
+}
+.dot,.dot:nth-child(2),.dot-active,.dot-inactive{
+	position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 13px;
+    border: inset 2px #666;
+}
+.dot {   
+	animation: blinking 1s infinite;
+}  
+.dot:nth-child(2){
+    margin-bottom: 32px;
+    margin-top: 9px;
+}
+.dot-active {	
+	background: var(--c) !important;   
+}
+.dot-inactive {	
+	background: linear-gradient(to right top, #283023, #24271d, #1f1f18, #191713, #100f0d);   
+}
+	@media (max-width:768px) {
+		.dot, .dot:nth-child(2), .dot-active, .dot-inactive {
+			width: 12px;
+			height: 12px;
+			margin-top: 4px;
+			margin-bottom: 9px;
+		}
+		.am-pm [class^="dot"]{
+			margin: 0;
+		}
+	}
+	@media (max-width:600px) {
+		.dot, .dot:nth-child(2), .dot-active, .dot-inactive {
+			width: 12px;
+			height: 12px;
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+	}
+
+
+
+
+.clock-field .dymo {
+	font-family: Martidoc;
+	background-color: #450403;
+	color: #cccccc;
+	font-size: 26px;
+	text-transform: uppercase;
+	padding: 5px 15px;
+	margin-bottom: 10px;
+}
+	@media (max-width:768px) {
+		.clock-field .dymo {
+			font-size: 16px;
+			margin-bottom: 5px;
+		}
+	}
+	@media (max-width:600px) {
+		.clock-field .dymo {
+			padding: 2px 10px;
+		}
+	}
+
+
+
+.year, .date, .month, .numbers{    
+	background-color: #000000;
+    border: groove 2px #666;
+    border-inline-color: #333;
+    border-radius: 5px;
+}
+
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+.month	{
+	margin-left: 0 !important;	
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: darkgray;
+    background: var(--fondomes);
+    background-size: 800px 104px;   
+    position: relative;
+}
+
+
+
+
+
+
+/* CLOCK */
+.clock-field {
+	margin: 5px 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.clock-field div:nth-child(n){	
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;	
+}
+.clock-field div:nth-child(2){
+	margin-left: 30px;
+}
+.clock-field div:nth-child(3){
+	margin-left: 40px;
+}
+	@media (max-width:768px) {
+		.clock-field div:nth-child(2),
+		.clock-field div:nth-child(3){
+			margin-left: 10px;
+		}
+	}
+
+.clock-field div div{
+	margin-left: 0 !important;
+	width: -webkit-fill-available;
+    padding-right: 20px;
+}
+.clock-field div div.numbers{
+	width: 115px;
+}
+.clock-field div div.numbers placeholder{
+	width: 158px;
+}
+	@media (max-width:600px) {
+		.clock-field div div{
+			padding-right: 12px;
+		}
+	}
+.clock-field div div p {
+	font-size: 138px;
+	position: relative;
+	z-index: 100;
+	line-height: 114px;	
+    font-style: italic;
+    letter-spacing: 2px;
+	left:10px;
+}
+	@media (max-width:768px) {
+		.clock-field div div p {
+			font-size: 70px;
+			line-height: 57px;
+		}
+	}
+	
+
+
+
+.clock-field div.am-pm div p {
+	line-height: normal;
+	font-style: normal;
+}
+.clock-field div.am-pm {
+	justify-content: center;
+	color: #cccccc;
+	font-family: Martidoc;
+	text-transform: uppercase;
+	width: 64px;
+	margin-left: 0 !important;
+}
+.clock-field div.am-pm div{
+	padding-right: 0px;	
+}
+	
+.clock-field div.am-pm div p {	
+	width: auto;
+	left:0!important;
+}
+.clock-field .am,
+.clock-field .pm {
+	color: #cccccc;
+	background-color: #450403;
+	font-size: 25px;
+	font-weight: bold;
+}
+.clock-field .pm {
+    margin-top: 8px;
+}
+	@media (max-width:768px) {
+		.clock-field .am,
+		.clock-field .pm {
+				font-size: 14px;
+		}
+	}
+
+
+
+.letrero{
+	font-family: Martidoc;
+    color: #cccccc;
+    background-color: #000000;
+    font-size: 30px;
+    width: fit-content;
+ 	margin: 15px auto 0px;
+    padding: 5px 24px;
+    letter-spacing: 1px
+}
+	@media (max-width:780px) {
+		.letrero{
+			font-size: 16px;
+		}
+	}
+
+	
