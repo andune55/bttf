@@ -318,7 +318,6 @@ main.clock-display.departed{
 	line-height: 114px;	
     font-style: italic;
     letter-spacing: 2px;
-	left:10px;
 }
 	@media (max-width:768px) {
 		.clock-field div div p {
@@ -348,7 +347,6 @@ main.clock-display.departed{
 	
 .clock-field div.am-pm div p {	
 	width: auto;
-	left:0!important;
 }
 .clock-field .am,
 .clock-field .pm {
